@@ -79,19 +79,21 @@ def create_gui(weather_data):
     ttk.Label(frame_wind, text="Wind Gust (mph)").grid(row=1, column=0, sticky="w", padx=5, pady=5)
     ttk.Label(frame_wind, text=weather_data.get('Wind Gust(mph)', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
 
-    # Create labels for pressure and humidity
-    frame_pressure_humidity = ttk.Frame(root, padding="10")
-    frame_pressure_humidity.grid(row=3, column=0, sticky="nw")
-    ttk.Label(frame_pressure_humidity, text="Pressure (mb)").grid(row=0, column=0, sticky="w", padx=5, pady=5)
-    ttk.Label(frame_pressure_humidity, text=weather_data.get('Pressure(mb)', '')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
-    ttk.Label(frame_pressure_humidity, text="Humidity (%)").grid(row=1, column=0, sticky="w", padx=5, pady=5)
-    ttk.Label(frame_pressure_humidity, text=weather_data.get('Humidity(%)', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
+    # # Create labels for pressure and humidity
+    # frame_pressure_humidity = ttk.Frame(root, padding="10")
+    # frame_pressure_humidity.grid(row=3, column=0, sticky="nw")
+    # ttk.Label(frame_pressure_humidity, text="Pressure (mb)").grid(row=0, column=0, sticky="w", padx=5, pady=5)
+    # ttk.Label(frame_pressure_humidity, text=weather_data.get('Pressure(mb)', '')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
+    # ttk.Label(frame_pressure_humidity, text="Humidity (%)").grid(row=1, column=0, sticky="w", padx=5, pady=5)
+    # ttk.Label(frame_pressure_humidity, text=weather_data.get('Humidity(%)', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
 
-    # Create labels for pollen and UV
+    
+    # Create a frame for pollen and UV
     frame_pollen_uv = ttk.Frame(root, padding="10")
-    frame_pollen_uv.grid(row=3, column=1, sticky="nw")
+    frame_pollen_uv.grid(row=3, column=0, columnspan=2, sticky="nw")
+
+    # Create label for Pollen
     ttk.Label(frame_pollen_uv, text="Pollen").grid(row=0, column=0, sticky="w", padx=5, pady=5)
-    ttk.Label(frame_pollen_uv, text=weather_data.get('Pollen', '')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
 
     # Load image for pollen if 'H', 'M', or 'L'
     pollen_condition = weather_data.get('Pollen', '')
@@ -119,7 +121,8 @@ def create_gui(weather_data):
     else:
         ttk.Label(frame_pollen_uv, text=weather_data.get('Pollen', '')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
 
-    ttk.Label(frame_pollen_uv, text="UV").grid(row=1, column=0, sticky="w", padx=5, pady=5)
+    # Create label for UV
+    ttk.Label(frame_pollen_uv, text="UV").grid(row=0, column=3, sticky="w", padx=5, pady=5)
 
     # Load image for UV if 'H', 'M', or 'L'
     uv_condition = weather_data.get('UV', '')
@@ -137,15 +140,19 @@ def create_gui(weather_data):
             photo_uv = ImageTk.PhotoImage(image_uv)
             label_uv_image = ttk.Label(frame_pollen_uv, image=photo_uv)
             label_uv_image.image = photo_uv
-            label_uv_image.grid(row=1, column=1, sticky="w", padx=5, pady=5)
+            label_uv_image.grid(row=0, column=2, sticky="w", padx=5, pady=5)
         except FileNotFoundError:
             print(f"Image file '{uv_image_path}' not found for UV. Displaying text instead.")
-            ttk.Label(frame_pollen_uv, text=weather_data.get('UV', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
+            ttk.Label(frame_pollen_uv, text=weather_data.get('UV', '')).grid(row=0, column=2, sticky="w", padx=5, pady=5)
         except Exception as e:
             print(f"Error loading UV image: {e}")
-            ttk.Label(frame_pollen_uv, text=weather_data.get('UV', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
+            ttk.Label(frame_pollen_uv, text=weather_data.get('UV', '')).grid(row=0, column=2, sticky="w", padx=5, pady=5)
     else:
-        ttk.Label(frame_pollen_uv, text=weather_data.get('UV', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
+        ttk.Label(frame_pollen_uv, text=weather_data.get('UV', '')).grid(row=0, column=2, sticky="w", padx=5, pady=5)
+
+
+
+
 
     # Create a frame for sunrise and sunset
     frame_sunrise_sunset = ttk.Frame(root, padding="10")
