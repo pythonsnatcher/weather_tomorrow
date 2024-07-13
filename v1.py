@@ -1,5 +1,6 @@
 import requests
 from lxml import html
+import csv
 
 def the_weather_outlook(url):
     try:
@@ -132,8 +133,19 @@ url_bbc_weather = "https://www.bbc.co.uk/weather/2643743"
 
 combined_weather_data = get_combined_weather_data(url_weather_outlook, url_bbc_weather)
 
-# Print combined results if data is fetched successfully
+# Write combined results to a CSV file if data is fetched successfully
 if combined_weather_data:
     print("Combined Weather Data:")
     for key, value in combined_weather_data.items():
         print(f"{key}: {value}")
+
+    # Specify the CSV file path
+    csv_file_path = "weather_tomorrow.csv"
+    
+    # Write the combined weather data to a CSV file
+    with open(csv_file_path, mode='w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=combined_weather_data.keys())
+        writer.writeheader()
+        writer.writerow(combined_weather_data)
+    
+    print(f"\nWeather data has been written to {csv_file_path}")
