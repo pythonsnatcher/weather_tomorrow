@@ -1,3 +1,7 @@
+"""
+the json credentials file needs to be locally accessible for this script to function
+"""
+
 import requests
 from lxml import html
 import csv
