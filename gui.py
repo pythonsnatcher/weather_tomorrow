@@ -150,7 +150,52 @@ def create_gui(weather_data):
     # Create labels for sunrise and sunset
     frame_sunrise_sunset = ttk.Frame(root, padding="10")
     frame_sunrise_sunset.grid(row=4, column=0, columnspan=2, sticky="nsew")
-    ttk.Label(frame_sunrise_sunset, text=f"Sunrise: {weather_data.get('Sunrise', '')}, Sunset: {weather_data.get('Sunset', '')}").pack(pady=10)
+
+    # Load image for sunrise if available
+    sunrise_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/sunrise.png"
+    try:
+        image_sunrise = Image.open(sunrise_image_path)
+        image_sunrise = image_sunrise.resize((50, 50))  # Resize image to fit within a 50x50 box
+        photo_sunrise = ImageTk.PhotoImage(image_sunrise)
+        label_sunrise_image = ttk.Label(frame_sunrise_sunset, image=photo_sunrise)
+        label_sunrise_image.image = photo_sunrise
+        label_sunrise_image.grid(row=0, column=0, sticky="w", padx=5, pady=5)
+
+        # Display sunrise time value
+        ttk.Label(frame_sunrise_sunset, text=weather_data.get('Sunrise', ''), font=('Helvetica', 14, 'bold')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
+
+    except FileNotFoundError:
+        print(f"Image file '{sunrise_image_path}' not found for sunrise. Displaying text instead.")
+        ttk.Label(frame_sunrise_sunset, text="Sunrise", font=('Helvetica', 14, 'bold')).grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        ttk.Label(frame_sunrise_sunset, text=f"Sunrise: {weather_data.get('Sunrise', '')}", font=('Helvetica', 14, 'bold')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
+
+    except Exception as e:
+        print(f"Error loading sunrise image: {e}")
+        ttk.Label(frame_sunrise_sunset, text="Sunrise", font=('Helvetica', 14, 'bold')).grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        ttk.Label(frame_sunrise_sunset, text=f"Sunrise: {weather_data.get('Sunrise', '')}", font=('Helvetica', 14, 'bold')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
+
+    # Load image for sunset if available
+    sunset_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/sunset.png"
+    try:
+        image_sunset = Image.open(sunset_image_path)
+        image_sunset = image_sunset.resize((50, 50))  # Resize image to fit within a 50x50 box
+        photo_sunset = ImageTk.PhotoImage(image_sunset)
+        label_sunset_image = ttk.Label(frame_sunrise_sunset, image=photo_sunset)
+        label_sunset_image.image = photo_sunset
+        label_sunset_image.grid(row=1, column=0, sticky="w", padx=5, pady=5)
+
+        # Display sunset time value
+        ttk.Label(frame_sunrise_sunset, text=weather_data.get('Sunset', ''), font=('Helvetica', 14, 'bold')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
+
+    except FileNotFoundError:
+        print(f"Image file '{sunset_image_path}' not found for sunset. Displaying text instead.")
+        ttk.Label(frame_sunrise_sunset, text="Sunset", font=('Helvetica', 14, 'bold')).grid(row=1, column=0, sticky="w", padx=5, pady=5)
+        ttk.Label(frame_sunrise_sunset, text=f"Sunset: {weather_data.get('Sunset', '')}", font=('Helvetica', 14, 'bold')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
+
+    except Exception as e:
+        print(f"Error loading sunset image: {e}")
+        ttk.Label(frame_sunrise_sunset, text="Sunset", font=('Helvetica', 14, 'bold')).grid(row=1, column=0, sticky="w", padx=5, pady=5)
+        ttk.Label(frame_sunrise_sunset, text=f"Sunset: {weather_data.get('Sunset', '')}", font=('Helvetica', 14, 'bold')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
 
     # Create labels for rain chance and rain fall
     frame_rain = ttk.Frame(root, padding="10")
