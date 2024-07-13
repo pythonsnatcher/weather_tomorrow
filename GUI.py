@@ -1,3 +1,5 @@
+#the json credentials file needs to be locally accessible for this to work
+
 import tkinter as tk
 from tkinter import ttk
 import csv
