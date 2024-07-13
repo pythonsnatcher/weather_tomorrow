@@ -1,4 +1,5 @@
 #the json credentials file needs to be locally accessible for this to work
+#the json credentials file needs to be locally accessible for this to work
 
 import tkinter as tk
 from tkinter import ttk
@@ -319,6 +320,12 @@ def create_gui(weather_data):
     frame_sunrise_sunset.grid_columnconfigure(2, weight=1)  # Make the third column expandable
     frame_sunrise_sunset.grid_columnconfigure(3, weight=1)  # Make the fourth column expandable
 
+
+
+
+
+
+
         # Create a frame for rain chance and rain fall
     frame_rain = ttk.Frame(root, padding="10")
     frame_rain.grid(row=6, column=0, columnspan=2, sticky="nsew")  # Center align with padding
@@ -348,6 +355,44 @@ def create_gui(weather_data):
     # Center-align both contents within frame_rain
     frame_rain.grid_columnconfigure(0, weight=1)  # Make the first column expandable
     frame_rain.grid_columnconfigure(1, weight=1)  # Make the second column expandable
+
+
+
+
+
+
+    # Create a frame for moon phase
+    frame_moon_phase = ttk.Frame(root, padding="10")
+    frame_moon_phase.grid(row=6, column=0, columnspan=2, sticky="nsew", padx=50, pady=10)
+
+    # Check if the moon phase is 'First Quarter'
+    moon_phase = weather_data.get('Moon Phase', '')
+    if moon_phase == 'First Quarter':
+        moon_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/first_quarter_moon.png"
+        try:
+            moon_image = Image.open(moon_image_path)
+            moon_image = moon_image.resize((50, 50))  # Resize image to fit within a 50x50 box
+            moon_photo = ImageTk.PhotoImage(moon_image)
+
+            # Create label for moon phase image
+            label_moon_image = ttk.Label(frame_moon_phase, image=moon_photo)
+            label_moon_image.image = moon_photo
+            label_moon_image.pack(padx=10, pady=10)
+
+        except FileNotFoundError:
+            print(f"Image file '{moon_image_path}' not found for moon phase.")
+            ttk.Label(frame_moon_phase, text="Moon Phase Image Not Found").pack(padx=10, pady=10)
+
+        except Exception as e:
+            print(f"Error loading moon phase image: {e}")
+            ttk.Label(frame_moon_phase, text="Error Loading Image").pack(padx=10, pady=10)
+
+    else:
+        ttk.Label(frame_moon_phase, text=f"Moon Phase: {moon_phase}").pack(padx=10, pady=10)
+
+
+
+
 
     
     root.mainloop()
