@@ -104,9 +104,10 @@ def create_gui(weather_data):
 
 
 
+
     # Create a frame for wind speed and gust
     frame_wind = ttk.Frame(root, padding="10")
-    frame_wind.grid(row=3, column=1, sticky="nw")
+    frame_wind.grid(row=3, column=0, columnspan=3, sticky="nsew", padx=50, pady=10)  # Center align with padding
 
     # Load image for wind
     wind_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/wind.png"
@@ -114,6 +115,8 @@ def create_gui(weather_data):
         image_wind = Image.open(wind_image_path)
         image_wind = image_wind.resize((50, 50))  # Resize image to fit within a 50x50 box
         photo_wind = ImageTk.PhotoImage(image_wind)
+
+        # Create label for wind image
         label_wind_image = ttk.Label(frame_wind, image=photo_wind)
         label_wind_image.image = photo_wind
         label_wind_image.grid(row=0, column=0, rowspan=2, sticky="w", padx=5, pady=5)  # Span two rows for wind image
@@ -128,9 +131,17 @@ def create_gui(weather_data):
 
     # Display wind speed above wind gust on the right side of the image
     ttk.Label(frame_wind, text="Speed:").grid(row=0, column=1, sticky="e", padx=5, pady=5)
-    ttk.Label(frame_wind, text=weather_data.get('Wind Speed(mph)', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
-    ttk.Label(frame_wind, text="Gust:").grid(row=0, column=2, sticky="e", padx=5, pady=5)
+    ttk.Label(frame_wind, text=weather_data.get('Wind Speed(mph)', '')).grid(row=0, column=2, sticky="w", padx=5, pady=5)
+    ttk.Label(frame_wind, text="Gust:").grid(row=1, column=1, sticky="e", padx=5, pady=5)
     ttk.Label(frame_wind, text=weather_data.get('Wind Gust(mph)', '')).grid(row=1, column=2, sticky="w", padx=5, pady=5)
+
+    # Center-align contents within frame_wind
+    frame_wind.grid_columnconfigure(0, weight=1)  # Make the first column expandable
+    frame_wind.grid_columnconfigure(1, weight=1)  # Make the second column expandable
+    frame_wind.grid_columnconfigure(2, weight=1)  # Make the third column expandable
+
+
+
     # # Create labels for pressure and humidity
     # frame_pressure_humidity = ttk.Frame(root, padding="10")
     # frame_pressure_humidity.grid(row=3, column=0, sticky="nw")
@@ -140,9 +151,15 @@ def create_gui(weather_data):
     # ttk.Label(frame_pressure_humidity, text=weather_data.get('Humidity(%)', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
 
     
+
+
+
+
+
     # Create a frame for pollen and UV
     frame_pollen_uv = ttk.Frame(root, padding="10")
-    frame_pollen_uv.grid(row=4, column=0, columnspan=2, sticky="nw")
+    frame_pollen_uv.grid(row=4, column=0, columnspan=2, sticky="nsew", padx=50, pady=10)  # Center align with padding
+
 
     # Create label for Pollen
     ttk.Label(frame_pollen_uv, text="Pollen").grid(row=0, column=0, sticky="w", padx=5, pady=5)
@@ -203,9 +220,13 @@ def create_gui(weather_data):
         ttk.Label(frame_pollen_uv, text=weather_data.get('UV', '')).grid(row=0, column=2, sticky="w", padx=5, pady=5)
 
 
+
+
+
+    
     # Create a frame for temperature with image and arrows
     frame_temp = ttk.Frame(root, padding="10")
-    frame_temp.grid(row=2, column=0, sticky="nw")
+    frame_temp.grid(row=2, column=0, sticky="nsew",columnspan= 3, padx=50, pady=10)  # Center align with padding
 
     # Load image for temperature display
     temp_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/temp.png"
@@ -237,11 +258,18 @@ def create_gui(weather_data):
         print(f"Error loading temperature image: {e}")
         ttk.Label(frame_temp, text="Error Loading Image").grid(row=0, column=0, sticky="w", padx=5, pady=5)
 
+    # Center-align contents within frame_temp
+    frame_temp.grid_columnconfigure(0, weight=1)  # Make the first column expandable
+    frame_temp.grid_columnconfigure(1, weight=1)  # Make the second column expandable
+    frame_temp.grid_columnconfigure(2, weight=1)  # Make the third column expandable
+
+
+
 
 
     # Create a frame for sunrise and sunset
     frame_sunrise_sunset = ttk.Frame(root, padding="10")
-    frame_sunrise_sunset.grid(row=5, column=0, columnspan=3, sticky="nsew")
+    frame_sunrise_sunset.grid(row=5, column=0, columnspan=3, sticky="nsew")  # Center align with padding
 
     # Load image for sunrise if available
     sunrise_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/sunrise.png"
@@ -272,22 +300,28 @@ def create_gui(weather_data):
         photo_sunset = ImageTk.PhotoImage(image_sunset)
         label_sunset_image = ttk.Label(frame_sunrise_sunset, image=photo_sunset)
         label_sunset_image.image = photo_sunset
-        label_sunset_image.grid(row=0, column=3, sticky="e", padx=5, pady=5)
+        label_sunset_image.grid(row=0, column=2, sticky="e", padx=5, pady=5)
 
         # Display sunset time value
-        ttk.Label(frame_sunrise_sunset, text=weather_data.get('Sunset', ''), font=('Helvetica', 14, 'bold')).grid(row=0, column=2, sticky="e", padx=5, pady=5)
+        ttk.Label(frame_sunrise_sunset, text=weather_data.get('Sunset', ''), font=('Helvetica', 14, 'bold')).grid(row=0, column=3, sticky="e", padx=5, pady=5)
 
     except FileNotFoundError:
         print(f"Image file '{sunset_image_path}' not found for sunset. Displaying text instead.")
-        ttk.Label(frame_sunrise_sunset, text=f"Sunset: {weather_data.get('Sunset', '')}", font=('Helvetica', 14, 'bold')).grid(row=0, column=2, sticky="e", padx=5, pady=5)
+        ttk.Label(frame_sunrise_sunset, text=f"Sunset: {weather_data.get('Sunset', '')}", font=('Helvetica', 14, 'bold')).grid(row=0, column=3, sticky="e", padx=5, pady=5)
 
     except Exception as e:
         print(f"Error loading sunset image: {e}")
-        ttk.Label(frame_sunrise_sunset, text=f"Sunset: {weather_data.get('Sunset', '')}", font=('Helvetica', 14, 'bold')).grid(row=0, column=2, sticky="e", padx=5, pady=5)
+        ttk.Label(frame_sunrise_sunset, text=f"Sunset: {weather_data.get('Sunset', '')}", font=('Helvetica', 14, 'bold')).grid(row=0, column=3, sticky="e", padx=5, pady=5)
 
-    # Create labels for rain chance and rain fall
+    # Center-align both contents within frame_sunrise_sunset
+    frame_sunrise_sunset.grid_columnconfigure(0, weight=1)  # Make the first column expandable
+    frame_sunrise_sunset.grid_columnconfigure(1, weight=1)  # Make the second column expandable
+    frame_sunrise_sunset.grid_columnconfigure(2, weight=1)  # Make the third column expandable
+    frame_sunrise_sunset.grid_columnconfigure(3, weight=1)  # Make the fourth column expandable
+
+        # Create a frame for rain chance and rain fall
     frame_rain = ttk.Frame(root, padding="10")
-    frame_rain.grid(row=6, column=0, columnspan=2, sticky="nsew")
+    frame_rain.grid(row=6, column=0, columnspan=2, sticky="nsew")  # Center align with padding
 
     # Load and display umbrella image
     umbrella_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/umbrella.png"
@@ -297,20 +331,23 @@ def create_gui(weather_data):
         photo_umbrella = ImageTk.PhotoImage(image_umbrella)
         label_umbrella_image = ttk.Label(frame_rain, image=photo_umbrella)
         label_umbrella_image.image = photo_umbrella  # Keep a reference to the image
-        label_umbrella_image.grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        label_umbrella_image.grid(row=0, column=0, padx=5, pady=5)
 
     except FileNotFoundError:
         print(f"Image file '{umbrella_image_path}' not found.")
-        ttk.Label(frame_rain, text="Umbrella Image Not Found").grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        ttk.Label(frame_rain, text="Umbrella Image Not Found").grid(row=0, column=0, padx=5, pady=5)
 
     except Exception as e:
         print(f"Error loading umbrella image: {e}")
-        ttk.Label(frame_rain, text="Error Loading Image").grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        ttk.Label(frame_rain, text="Error Loading Image").grid(row=0, column=0, padx=5, pady=5)
 
-    # Display rain chance and rain fall values
-    ttk.Label(frame_rain, text=f"{weather_data.get('Chance of Rain(%)', '')}%, {weather_data.get('Rain Total (mm)', '')}mm", font=('Helvetica', 14, 'bold')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
+    # Display rain chance and rain fall values, center aligning them
+    rain_text = f"{weather_data.get('Chance of Rain(%)', '')}%, {weather_data.get('Rain Total (mm)', '')}mm"
+    ttk.Label(frame_rain, text=rain_text, font=('Helvetica', 14, 'bold')).grid(row=0, column=1, padx=5, pady=5)
 
-
+    # Center-align both contents within frame_rain
+    frame_rain.grid_columnconfigure(0, weight=1)  # Make the first column expandable
+    frame_rain.grid_columnconfigure(1, weight=1)  # Make the second column expandable
 
     
     root.mainloop()
