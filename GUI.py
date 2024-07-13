@@ -2,20 +2,54 @@ import tkinter as tk
 from tkinter import ttk
 import csv
 from PIL import Image, ImageTk
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
+#--------------------------------------------------------------------------------------
 # Function to read weather data from CSV
-def read_weather_data_from_csv(file_path):
+# def read_weather_data_from_csv(file_path):
+#     try:
+#         with open(file_path, mode='r', newline='', encoding='utf-8') as file:
+#             reader = csv.DictReader(file)
+#             # Assuming there is only one row of data in the CSV
+#             return next(reader, None)
+#     except FileNotFoundError:
+#         print(f"Error: File '{file_path}' not found.")
+#         return None
+#     except Exception as e:
+#         print(f"Error reading CSV file '{file_path}': {e}")
+#         return None
+
+
+#-------------------------------------------------------------------------------------
+# Function to read weather data from Google Sheets
+def read_weather_data_from_google_sheets(sheet_url):
     try:
-        with open(file_path, mode='r', newline='', encoding='utf-8') as file:
-            reader = csv.DictReader(file)
-            # Assuming there is only one row of data in the CSV
-            return next(reader, None)
+        credentials_path = '/Users/snatch./Downloads/weather_tomorrow/weather-data-429210-af2c31cf7a66.json'
+        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(credentials_path, scope)
+        client = gspread.authorize(credentials)
+        doc = client.open_by_url(sheet_url)
+        sheet = doc.sheet1
+        data = sheet.get_all_records()
+        return data[0] if data else None
+
     except FileNotFoundError:
-        print(f"Error: File '{file_path}' not found.")
+        print(f"Error: File 'credentials.json' not found.")
         return None
     except Exception as e:
-        print(f"Error reading CSV file '{file_path}': {e}")
+        print(f"Error reading Google Sheets data: {e}")
         return None
+
+        # Example usage:
+sheet_url = "https://docs.google.com/spreadsheets/d/1QrvWcnT55mAl2NVi7rpZbdm9AzCsAvrEYRrgpMQQ-_I/edit?gid=0#gid=0"
+weather_data = read_weather_data_from_google_sheets(sheet_url)
+if weather_data:
+    print("Weather data retrieved successfully:")
+    print(weather_data)
+    create_gui(weather_data)  # Call create_gui with retrieved weather_data
+else:
+    print("No weather data available.")
 
 # Function to create the GUI
 def create_gui(weather_data):
@@ -288,11 +322,11 @@ def get_image_path(weather_condition):
 
     # Return the image path based on the weather condition
     return image_map.get(weather_condition, "")
-
-# Example usage:
-file_path = "weather_tomorrow.csv"
-weather_data = read_weather_data_from_csv(file_path)
-if weather_data:
-    create_gui(weather_data)
-else:
-    print("No weather data available.")
+#------------------------------------------------------------------
+# # Example usage:
+# file_path = "weather_tomorrow.csv"
+# weather_data = read_weather_data_from_csv(file_path)
+# if weather_data:
+#     create_gui(weather_data)
+# else:
+#     print("No weather data available.")
