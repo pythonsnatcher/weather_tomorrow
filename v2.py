@@ -200,14 +200,34 @@ def create_gui(weather_data):
         print(f"Error loading sunset image: {e}")
         ttk.Label(frame_sunrise_sunset, text=f"Sunset: {weather_data.get('Sunset', '')}", font=('Helvetica', 14, 'bold')).grid(row=0, column=2, sticky="e", padx=5, pady=5)
 
-    
-
-
     # Create labels for rain chance and rain fall
     frame_rain = ttk.Frame(root, padding="10")
     frame_rain.grid(row=5, column=0, columnspan=2, sticky="nsew")
-    ttk.Label(frame_rain, text=f"Rain Chance: {weather_data.get('Chance of Rain(%)', '')}%, Rain Fall: {weather_data.get('Rain Total (mm)', '')}mm").pack(pady=10)
 
+    # Load and display umbrella image
+    umbrella_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/umbrella.png"
+    try:
+        image_umbrella = Image.open(umbrella_image_path)
+        image_umbrella = image_umbrella.resize((50, 50))  # Resize image to fit within a 50x50 box
+        photo_umbrella = ImageTk.PhotoImage(image_umbrella)
+        label_umbrella_image = ttk.Label(frame_rain, image=photo_umbrella)
+        label_umbrella_image.image = photo_umbrella  # Keep a reference to the image
+        label_umbrella_image.grid(row=0, column=0, sticky="w", padx=5, pady=5)
+
+    except FileNotFoundError:
+        print(f"Image file '{umbrella_image_path}' not found.")
+        ttk.Label(frame_rain, text="Umbrella Image Not Found").grid(row=0, column=0, sticky="w", padx=5, pady=5)
+
+    except Exception as e:
+        print(f"Error loading umbrella image: {e}")
+        ttk.Label(frame_rain, text="Error Loading Image").grid(row=0, column=0, sticky="w", padx=5, pady=5)
+
+    # Display rain chance and rain fall values
+    ttk.Label(frame_rain, text=f"{weather_data.get('Chance of Rain(%)', '')}%, {weather_data.get('Rain Total (mm)', '')}mm", font=('Helvetica', 14, 'bold')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
+
+
+
+    
     root.mainloop()
 
 def get_image_path(weather_condition):
