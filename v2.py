@@ -71,14 +71,33 @@ def create_gui(weather_data):
     ttk.Label(frame_temp, text="Low Temp (C)").grid(row=1, column=0, sticky="w", padx=5, pady=5)
     ttk.Label(frame_temp, text=weather_data.get('Low Temperature(C)', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
 
-    # Create labels for wind speed and gust
+    # Create a frame for wind speed and gust
     frame_wind = ttk.Frame(root, padding="10")
     frame_wind.grid(row=2, column=1, sticky="nw")
-    ttk.Label(frame_wind, text="Wind Speed (mph)").grid(row=0, column=0, sticky="w", padx=5, pady=5)
-    ttk.Label(frame_wind, text=weather_data.get('Wind Speed(mph)', '')).grid(row=0, column=1, sticky="w", padx=5, pady=5)
-    ttk.Label(frame_wind, text="Wind Gust (mph)").grid(row=1, column=0, sticky="w", padx=5, pady=5)
-    ttk.Label(frame_wind, text=weather_data.get('Wind Gust(mph)', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
 
+    # Load image for wind
+    wind_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/wind.png"
+    try:
+        image_wind = Image.open(wind_image_path)
+        image_wind = image_wind.resize((50, 50))  # Resize image to fit within a 50x50 box
+        photo_wind = ImageTk.PhotoImage(image_wind)
+        label_wind_image = ttk.Label(frame_wind, image=photo_wind)
+        label_wind_image.image = photo_wind
+        label_wind_image.grid(row=0, column=0, rowspan=2, sticky="w", padx=5, pady=5)  # Span two rows for wind image
+
+    except FileNotFoundError:
+        print(f"Image file '{wind_image_path}' not found for wind.")
+        ttk.Label(frame_wind, text="Wind", font=('Helvetica', 12, 'bold')).grid(row=0, column=0, rowspan=2, sticky="w", padx=5, pady=5)
+
+    except Exception as e:
+        print(f"Error loading wind image: {e}")
+        ttk.Label(frame_wind, text="Wind", font=('Helvetica', 12, 'bold')).grid(row=0, column=0, rowspan=2, sticky="w", padx=5, pady=5)
+
+    # Display wind speed above wind gust on the right side of the image
+    ttk.Label(frame_wind, text="Speed:").grid(row=0, column=1, sticky="e", padx=5, pady=5)
+    ttk.Label(frame_wind, text=weather_data.get('Wind Speed(mph)', '')).grid(row=1, column=1, sticky="w", padx=5, pady=5)
+    ttk.Label(frame_wind, text="Gust:").grid(row=0, column=2, sticky="e", padx=5, pady=5)
+    ttk.Label(frame_wind, text=weather_data.get('Wind Gust(mph)', '')).grid(row=1, column=2, sticky="w", padx=5, pady=5)
     # # Create labels for pressure and humidity
     # frame_pressure_humidity = ttk.Frame(root, padding="10")
     # frame_pressure_humidity.grid(row=3, column=0, sticky="nw")
