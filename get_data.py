@@ -101,6 +101,10 @@ def get_bbc_weather_data(url):
         weather_description = tree.xpath(xpath_weather_description)[0].strip()
         low_temperature = tree.xpath(xpath_low_temperature)[0].strip()
 
+        # Clean up low_temperature to remove non-numeric characters (e.g., '°')
+        low_temperature = ''.join(filter(lambda x: x.isdigit() or x == '.', low_temperature))
+
+
         bbc_weather_data = {
             'Pollen': tomorrow_pollen,
             'UV': tomorrow_uv,
@@ -148,7 +152,7 @@ def get_combined_weather_data(url_weather_outlook, url_bbc_weather, url_weather_
     if bbc_weather_data:
         combined_weather_data.update(bbc_weather_data)
 
-    
+
 
     url_moon_phase = "https://timesprayer.com/en/moon/united-kingdom-gb/london/#upcomingmoonphases"
     moon_phase_data = fetch_moon_data(url_moon_phase)
@@ -165,7 +169,7 @@ def get_combined_weather_data(url_weather_outlook, url_bbc_weather, url_weather_
 
 def write_to_google_sheets(data, sheet_name):
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    
+
     # JSON credentials directly in the script
     creds_dict = {
         "type": "service_account",
@@ -202,8 +206,8 @@ combined_weather_data = get_combined_weather_data(url_weather_outlook, url_bbc_w
 if combined_weather_data:
     print("Combined Weather Data:")
     fieldnames = [
-        'Date', 'Location', 'Weather Description', 'High Temperature(C)', 'Low Temperature(C)', 
-        'Wind Speed(mph)', 'Wind Gust(mph)', 'Chance of Rain(%)', 'Rain Total (mm)', 
+        'Date', 'Location', 'Weather Description', 'High Temperature(C)', 'Low Temperature(C)',
+        'Wind Speed(mph)', 'Wind Gust(mph)', 'Chance of Rain(%)', 'Rain Total (mm)',
         'Humidity(%)', 'Pressure(mb)', 'Pollen', 'UV', 'Sunrise', 'Sunset', 'Moon Phase',
     ]
     for field in fieldnames:
