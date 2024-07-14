@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Data</title>
@@ -9,106 +10,121 @@
     <h1>Weather Conditions</h1>
 
     {% if weather_data_sheets %}
-        <ul>
-            <li>{{ weather_data_sheets['Location'] }}                           {{ weather_data_sheets['Date'] }}</li>
+    <ul>
+        <li>{{ weather_data_sheets['Location'] }} {{ weather_data_sheets['Date'] }}</li>
 
-            {% if weather_data_sheets['Weather Description'] %}
-    {% set weather_description = weather_data_sheets['Weather Description'] %}
-    <li style="display: flex; align-items: center;">
-        <img src="{% if weather_description == 'Sunny intervals and a gentle breeze' %}
-                     {{ url_for('static', filename='images/sunny_intervals_and_a_gentle_breeze.png') }}
-                 {% elif weather_description == 'Light rain showers and a gentle breeze' %}
-                     {{ url_for('static', filename='images/light_rain_showers.png') }}
-                 {% endif %}"
-             alt="{% if weather_description == 'Sunny intervals and a gentle breeze' %}
-                     Sunny Intervals and Gentle Breeze
-                 {% elif weather_description == 'Light rain showers and a gentle breeze' %}
-                     Light Rain Showers
-                 {% endif %}"
-             style="width: 75px; height: 75px; margin-right: 10px;">
-        <span>{{ weather_description }}</span>
-    </li>
-{% endif %}
-
-
-
-
-            <li><img src="{{ url_for('static', filename='images/temp.png') }}" alt="temp" style="width: 50px; height: 50px;">{{ weather_data_sheets['High Temperature(C)'] }}°C ↑ , {{ weather_data_sheets['Low Temperature(C)'] }}°C ↓
-</li>
-
-            <li><img src="{{ url_for('static', filename='images/wind.png') }}" alt="Umbrella" style="width: 50px; height: 50px;">Speed:{{ weather_data_sheets['Wind Speed(mph)'] }} , Gust:{{ weather_data_sheets['Wind Gust(mph)'] }}</li>
-
-
-
-            <li><img src="{{ url_for('static', filename='images/umbrella.png') }}" alt="Umbrella" style="width: 50px; height: 50px;"> {{ weather_data_sheets['Chance of Rain(%)'] }}% , {{ weather_data_sheets['Rain Total (mm)'] }}mm</li>
-
-
-<!--            <li>Humidity(%): {{ weather_data_sheets['Humidity(%)'] }}</li>-->
-<!--            <li>Pressure(mb): {{ weather_data_sheets['Pressure(mb)'] }}</li>-->
-
-            {% if weather_data_sheets['Pollen'] %}
-    {% set pollen_condition = weather_data_sheets['Pollen'] %}
-    <li>Pollen:
-        {% if pollen_condition == 'H' %}
-            <img src="{{ url_for('static', filename='images/red_for_h.png') }}" alt="High Pollen" style="width: 50px; height: 50px;">
-        {% elif pollen_condition == 'L' %}
-            <img src="{{ url_for('static', filename='images/green_for_L.png') }}" alt="Low Pollen" style="width: 50px; height: 50px;">
-        {% elif pollen_condition == 'M' %}
-            <img src="{{ url_for('static', filename='images/yellow_for_M.png') }}" alt="Moderate Pollen" style="width: 50px; height: 50px;">
-        {% else %}
-            <span>No pollen condition specified</span>
+        {% if weather_data_sheets['Weather Description'] %}
+        {% set weather_description = weather_data_sheets['Weather Description'] %}
+        <li style="display: flex; align-items: center;">
+            <img src="{% if weather_description == 'Sunny intervals and a gentle breeze' %}
+                        {{ url_for('static', filename='images/sunny_intervals_and_a_gentle_breeze.png') }}
+                    {% elif weather_description == 'Light rain showers and a gentle breeze' %}
+                        {{ url_for('static', filename='images/light_rain_showers.png') }}
+                    {% endif %}"
+                alt="{% if weather_description == 'Sunny intervals and a gentle breeze' %}
+                        Sunny Intervals and Gentle Breeze
+                    {% elif weather_description == 'Light rain showers and a gentle breeze' %}
+                        Light Rain Showers
+                    {% endif %}"
+                style="width: 75px; height: 75px; margin-right: 10px;">
+            <span>{{ weather_description }}</span>
+        </li>
         {% endif %}
-    </li>
-{% endif %}
 
+        <li><img src="{{ url_for('static', filename='images/temp.png') }}" alt="temp" style="width: 50px; height: 50px;">{{ weather_data_sheets['High Temperature(C)'] }}°C ↑ , {{ weather_data_sheets['Low Temperature(C)'] }}°C ↓</li>
 
-            {% if weather_data_sheets['UV'] %}
-    {% set uv_condition = weather_data_sheets['UV'] %}
-    <li>UV:
-        {% if uv_condition == 'H' %}
-            <img src="{{ url_for('static', filename='images/red_for_h.png') }}" alt="High UV" style="width: 50px; height: 50px;">
-        {% elif uv_condition == 'L' %}
-            <img src="{{ url_for('static', filename='images/green_for_L.png') }}" alt="Low UV" style="width: 50px; height: 50px;">
-        {% elif uv_condition == 'M' %}
-            <img src="{{ url_for('static', filename='images/yellow_for_M.png') }}" alt="Moderate UV" style="width: 50px; height: 50px;">
-        {% else %}
-            <span>No UV condition specified</span>
+        <li><img src="{{ url_for('static', filename='images/wind.png') }}" alt="Umbrella" style="width: 50px; height: 50px;">Speed:{{ weather_data_sheets['Wind Speed(mph)'] }} , Gust:{{ weather_data_sheets['Wind Gust(mph)'] }}</li>
+
+        <li><img src="{{ url_for('static', filename='images/umbrella.png') }}" alt="Umbrella" style="width: 50px; height: 50px;"> {{ weather_data_sheets['Chance of Rain(%)'] }}% , {{ weather_data_sheets['Rain Total (mm)'] }}mm</li>
+
+        {% if weather_data_sheets['Pollen'] %}
+        {% set pollen_condition = weather_data_sheets['Pollen'] %}
+        <li>Pollen:
+            {% if pollen_condition == 'H' %}
+                <img src="{{ url_for('static', filename='images/red_for_h.png') }}" alt="High Pollen" style="width: 50px; height: 50px;">
+            {% elif pollen_condition == 'L' %}
+                <img src="{{ url_for('static', filename='images/green_for_L.png') }}" alt="Low Pollen" style="width: 50px; height: 50px;">
+            {% elif pollen_condition == 'M' %}
+                <img src="{{ url_for('static', filename='images/yellow_for_M.png') }}" alt="Moderate Pollen" style="width: 50px; height: 50px;">
+            {% else %}
+                <span>No pollen condition specified</span>
+            {% endif %}
+        </li>
         {% endif %}
-    </li>
-{% endif %}
 
-
-            <li><img src="{{ url_for('static', filename='images/sunrise.png') }}" alt="Umbrella" style="width: 50px; height: 50px;">{{ weather_data_sheets['Sunrise'] }}</li>
-            <li><img src="{{ url_for('static', filename='images/sunset.png') }}" alt="Umbrella" style="width: 50px; height: 50px;">{{ weather_data_sheets['Sunset'] }}</li>
-
-            {% if weather_data_sheets['Moon Phase'] %}
-    {% set moon_phase = weather_data_sheets['Moon Phase'] %}
-    <li>
-        {% if moon_phase == 'First Quarter' %}
-            <img src="{{ url_for('static', filename='images/first_quarter_moon.png') }}" alt="First Quarter Moon" style="width: 50px; height: 50px;">
-        {% elif moon_phase == 'Full Moon' %}
-            <img src="{{ url_for('static', filename='images/full_moon.png') }}" alt="Full Moon" style="width: 50px; height: 50px;">
-        {% elif moon_phase == 'New Moon' %}
-            <img src="{{ url_for('static', filename='images/new_moon.png') }}" alt="New Moon" style="width: 50px; height: 50px;">
-        {% elif moon_phase == 'Waxing Crescent' %}
-            <img src="{{ url_for('static', filename='images/waxing_crescent_moon.png') }}" alt="Waxing Crescent Moon" style="width: 50px; height: 50px;">
-        {% elif moon_phase == 'Waning Crescent' %}
-            <img src="{{ url_for('static', filename='images/waning_crescent_moon.png') }}" alt="Waning Crescent Moon" style="width: 50px; height: 50px;">
-        {% elif moon_phase == 'Waxing Gibbous' %}
-            <img src="{{ url_for('static', filename='images/waxing_gibbous_moon.png') }}" alt="Waxing Gibbous Moon" style="width: 50px; height: 50px;">
-        {% elif moon_phase == 'Waning Gibbous' %}
-            <img src="{{ url_for('static', filename='images/waning_gibbous_moon.png') }}" alt="Waning Gibbous Moon" style="width: 50px; height: 50px;">
-        {% else %}
-            <span>No moon phase data available</span>
+        {% if weather_data_sheets['UV'] %}
+        {% set uv_condition = weather_data_sheets['UV'] %}
+        <li>UV:
+            {% if uv_condition == 'H' %}
+                <img src="{{ url_for('static', filename='images/red_for_h.png') }}" alt="High UV" style="width: 50px; height: 50px;">
+            {% elif uv_condition == 'L' %}
+                <img src="{{ url_for('static', filename='images/green_for_L.png') }}" alt="Low UV" style="width: 50px; height: 50px;">
+            {% elif uv_condition == 'M' %}
+                <img src="{{ url_for('static', filename='images/yellow_for_M.png') }}" alt="Moderate UV" style="width: 50px; height: 50px;">
+            {% else %}
+                <span>No UV condition specified</span>
+            {% endif %}
+        </li>
         {% endif %}
-    </li>
-{% endif %}
 
-        </ul>
+        <li><img src="{{ url_for('static', filename='images/sunrise.png') }}" alt="Umbrella" style="width: 50px; height: 50px;">{{ weather_data_sheets['Sunrise'] }}</li>
+        <li><img src="{{ url_for('static', filename='images/sunset.png') }}" alt="Umbrella" style="width: 50px; height: 50px;">{{ weather_data_sheets['Sunset'] }}</li>
 
+        {% if weather_data_sheets['Moon Phase'] %}
+        {% set moon_phase = weather_data_sheets['Moon Phase'] %}
+        <li>
+            {% if moon_phase == 'First Quarter' %}
+                <img src="{{ url_for('static', filename='images/first_quarter_moon.png') }}" alt="First Quarter Moon" style="width: 50px; height: 50px;">
+            {% elif moon_phase == 'Full Moon' %}
+                <img src="{{ url_for('static', filename='images/full_moon.png') }}" alt="Full Moon" style="width: 50px; height: 50px;">
+            {% elif moon_phase == 'New Moon' %}
+                <img src="{{ url_for('static', filename='images/new_moon.png') }}" alt="New Moon" style="width: 50px; height: 50px;">
+            {% elif moon_phase == 'Waxing Crescent' %}
+                <img src="{{ url_for('static', filename='images/waxing_crescent_moon.png') }}" alt="Waxing Crescent Moon" style="width: 50px; height: 50px;">
+            {% elif moon_phase == 'Waning Crescent' %}
+                <img src="{{ url_for('static', filename='images/waning_crescent_moon.png') }}" alt="Waning Crescent Moon" style="width: 50px; height: 50px;">
+            {% elif moon_phase == 'Waxing Gibbous' %}
+                <img src="{{ url_for('static', filename='images/waxing_gibbous_moon.png') }}" alt="Waxing Gibbous Moon" style="width: 50px; height: 50px;">
+            {% elif moon_phase == 'Waning Gibbous' %}
+                <img src="{{ url_for('static', filename='images/waning_gibbous_moon.png') }}" alt="Waning Gibbous Moon" style="width: 50px; height: 50px;">
+            {% else %}
+                <span>No moon phase data available</span>
+            {% endif %}
+        </li>
+        {% endif %}
+
+    </ul>
 
     {% else %}
-        <p>No weather data available.</p>
+    <p>No weather data available.</p>
     {% endif %}
+
+    <script>
+        // Function to fetch weather data from Flask endpoint
+        function fetchWeatherData() {
+            fetch('/get_weather_data')
+                .then(response => response.json())
+                .then(data => {
+                    updateWeatherData(data); // Update weather data on the webpage
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                });
+        }
+
+        // Function to update weather data on the webpage
+        function updateWeatherData(data) {
+            document.getElementById('temperature').textContent = data.temperature;
+            document.getElementById('weather-description').textContent = data.weather_description;
+            document.getElementById('weather-icon').src = data.icon;
+        }
+
+        // Fetch weather data when the page loads
+        fetchWeatherData();
+
+        // Optionally, set an interval to fetch data periodically
+        // setInterval(fetchWeatherData, 60000); // Fetch data every minute (example)
+    </script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
