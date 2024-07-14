@@ -88,6 +88,7 @@ def get_bbc_weather_data(url):
         xpath_sunrise = '//*[@id="wr-forecast"]/div[4]/div/div[1]/div[4]/div/div[2]/div[1]/span[1]/span[2]/text()'
         xpath_sunset = '//*[@id="wr-forecast"]/div[4]/div/div[1]/div[4]/div/div[2]/div[1]/span[2]/span[2]/text()'
         xpath_weather_description = '//*[@id="daylink-1"]/div[4]/div[2]/div/text()'
+        xpath_low_temperature = '//*[@id="daylink-1"]/div[4]/div[1]/div/div[4]/div/div[2]/span[2]/span/span[1]/text()'
 
         response = requests.get(url)
         response.encoding = 'utf-8'
@@ -98,13 +99,15 @@ def get_bbc_weather_data(url):
         sunrise_time = tree.xpath(xpath_sunrise)[0].strip()
         sunset_time = tree.xpath(xpath_sunset)[0].strip()
         weather_description = tree.xpath(xpath_weather_description)[0].strip()
+        low_temperature = tree.xpath(xpath_low_temperature)[0].strip()
 
         bbc_weather_data = {
             'Pollen': tomorrow_pollen,
             'UV': tomorrow_uv,
             'Sunrise': sunrise_time,
             'Sunset': sunset_time,
-            'Weather Description': weather_description
+            'Weather Description': weather_description,
+            'Low Temperature(C)': low_temperature
         }
 
         return bbc_weather_data
@@ -113,26 +116,7 @@ def get_bbc_weather_data(url):
         print(f"Error fetching weather data from BBC Weather: {e}")
         return None
 
-def get_met_office_weather_data(url):
-    try:
-        xpath_low_temp = '//*[@id="dayTab1"]/div/div[1]/div[1]/div/div[2]/span[3]/text()'
 
-        response = requests.get(url)
-        response.encoding = 'utf-8'
-        tree = html.fromstring(response.content)
-
-        low_temp_text = tree.xpath(xpath_low_temp)[0].strip()
-        low_temp = extract_numeric_value(low_temp_text)
-
-        met_office_weather_data = {
-            'Low Temperature(C)': low_temp
-        }
-
-        return met_office_weather_data
-
-    except Exception as e:
-        print(f"Error fetching weather data from Met Office: {e}")
-        return None
 
 def fetch_moon_data(url):
     try:
@@ -153,7 +137,7 @@ def fetch_moon_data(url):
         print(f"Error fetching moon data: {e}")
         return None
 
-def get_combined_weather_data(url_weather_outlook, url_bbc_weather, url_met_office, url_weather_com):
+def get_combined_weather_data(url_weather_outlook, url_bbc_weather, url_weather_com):
     combined_weather_data = {}
 
     weather_outlook_data = the_weather_outlook(url_weather_outlook)
@@ -164,9 +148,7 @@ def get_combined_weather_data(url_weather_outlook, url_bbc_weather, url_met_offi
     if bbc_weather_data:
         combined_weather_data.update(bbc_weather_data)
 
-    met_office_weather_data = get_met_office_weather_data(url_met_office)
-    if met_office_weather_data:
-        combined_weather_data.update(met_office_weather_data)
+    
 
     url_moon_phase = "https://timesprayer.com/en/moon/united-kingdom-gb/london/#upcomingmoonphases"
     moon_phase_data = fetch_moon_data(url_moon_phase)
@@ -212,10 +194,10 @@ def write_to_google_sheets(data, sheet_name):
 
 url_weather_outlook = "https://www.theweatheroutlook.com/forecast/uk/london"
 url_bbc_weather = "https://www.bbc.co.uk/weather/2643743"
-url_met_office = "https://www.metoffice.gov.uk/weather/forecast/gcpvj0v07#?date=2024-07-14"
+
 url_weather_com = "https://weather.com/en-GB/weather/tenday/l/4c5ad40da52894d049451564c63c55bb65acbafdca5e334eba01d5aaec4983fc"
 
-combined_weather_data = get_combined_weather_data(url_weather_outlook, url_bbc_weather, url_met_office, url_weather_com)
+combined_weather_data = get_combined_weather_data(url_weather_outlook, url_bbc_weather, url_weather_com)
 
 if combined_weather_data:
     print("Combined Weather Data:")
