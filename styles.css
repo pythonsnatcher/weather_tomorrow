@@ -1,0 +1,71 @@
+/* Reset default margin and padding */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Set background image */
+body {
+    background-image: url('../static/images/bg.png'); /* Adjust the path if necessary */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the background image */
+    height: 100vh; /* Ensure full viewport height */
+}
+
+/* Style for the weather data container */
+.weather-container {
+    max-width: 600px; /* Adjust as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+}
+
+/* Style for the heading */
+.weather-heading {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Style for the list */
+.weather-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Style for list items */
+.weather-list li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+/* Style for images within list items */
+.weather-list li img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+/* Style for weather description text */
+.weather-description {
+    flex: 1; /* Take remaining space */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    .weather-container {
+        padding: 10px;
+    }
+    .weather-heading {
+        font-size: 20px;
+    }
+    .weather-list li img {
+        width: 40px;
+        height: 40px;
+    }
+}
