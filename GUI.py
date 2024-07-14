@@ -173,11 +173,11 @@ def create_gui(weather_data):
     pollen_condition = weather_data.get('Pollen', '')
     if pollen_condition == 'H' or pollen_condition == 'M' or pollen_condition == 'L':
         if pollen_condition == 'H':
-            pollen_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/red_for_h.png"
+            pollen_image_path = "images/red_for_h.png"
         elif pollen_condition == 'L':
-            pollen_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/green_for_L.png"
+            pollen_image_path = "images/green_for_L.png"
         elif pollen_condition == 'M':
-            pollen_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/yellow_for_M.png"
+            pollen_image_path = "images/yellow_for_M.png"
 
         try:
             image_pollen = Image.open(pollen_image_path)
@@ -202,11 +202,11 @@ def create_gui(weather_data):
     uv_condition = weather_data.get('UV', '')
     if uv_condition == 'H' or uv_condition == 'M' or uv_condition == 'L':
         if uv_condition == 'H':
-            uv_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/red_for_h.png"
+            uv_image_path = "images/red_for_h.png"
         elif uv_condition == 'L':
-            uv_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/green_for_L.png"
+            uv_image_path = "images/green_for_L.png"
         elif uv_condition == 'M':
-            uv_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/yellow_for_M.png"
+            uv_image_path = "images/yellow_for_M.png"
 
         try:
             image_uv = Image.open(uv_image_path)
@@ -234,7 +234,7 @@ def create_gui(weather_data):
     frame_temp.grid(row=2, column=0, sticky="nsew",columnspan= 3, padx=50, pady=10)  # Center align with padding
 
     # Load image for temperature display
-    temp_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/temp.png"
+    temp_image_path = "images/temp.png"
     try:
         image_temp = Image.open(temp_image_path)
         image_temp = image_temp.resize((50, 50))  # Resize image to fit within a 50x50 box
@@ -277,7 +277,7 @@ def create_gui(weather_data):
     frame_sunrise_sunset.grid(row=5, column=0, columnspan=3, sticky="nsew")  # Center align with padding
 
     # Load image for sunrise if available
-    sunrise_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/sunrise.png"
+    sunrise_image_path = "images/sunrise.png"
     try:
         image_sunrise = Image.open(sunrise_image_path)
         image_sunrise = image_sunrise.resize((50, 50))  # Resize image to fit within a 50x50 box
@@ -298,7 +298,7 @@ def create_gui(weather_data):
         ttk.Label(frame_sunrise_sunset, text=f"Sunrise: {weather_data.get('Sunrise', '')}", font=('Helvetica', 14, 'bold')).grid(row=0, column=0, sticky="w", padx=5, pady=5)
 
     # Load image for sunset if available
-    sunset_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/sunset.png"
+    sunset_image_path = "images/sunset.png"
     try:
         image_sunset = Image.open(sunset_image_path)
         image_sunset = image_sunset.resize((50, 50))  # Resize image to fit within a 50x50 box
@@ -335,7 +335,7 @@ def create_gui(weather_data):
     frame_rain.grid(row=6, column=0, columnspan=2, sticky="nsew")  # Center align with padding
 
     # Load and display umbrella image
-    umbrella_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/umbrella.png"
+    umbrella_image_path = "images/umbrella.png"
     try:
         image_umbrella = Image.open(umbrella_image_path)
         image_umbrella = image_umbrella.resize((50, 50))  # Resize image to fit within a 50x50 box
@@ -372,7 +372,7 @@ def create_gui(weather_data):
     # Check if the moon phase is 'First Quarter'
     moon_phase = weather_data.get('Moon Phase', '')
     if moon_phase == 'First Quarter':
-        moon_image_path = "/Users/snatch./Downloads/weather_tomorrow/images/first_quarter_moon.png"
+        moon_image_path = "images/first_quarter_moon.png"
         try:
             moon_image = Image.open(moon_image_path)
             moon_image = moon_image.resize((50, 50))  # Resize image to fit within a 50x50 box
@@ -404,7 +404,8 @@ def create_gui(weather_data):
 def get_image_path(weather_condition):
     # Define mappings of weather conditions to image paths
     image_map = {
-        "Sunny intervals and a gentle breeze": "/Users/snatch./Downloads/weather_tomorrow/images/sunny_intervals_and_a_gentle_breeze.png",
+        "Sunny intervals and a gentle breeze": "images/sunny_intervals_and_a_gentle_breeze.png",
+        'Light rain showers and a gentle breeze': 'images/light_rain_showers.png'
         # Add more mappings for other weather conditions as needed
     }
 
