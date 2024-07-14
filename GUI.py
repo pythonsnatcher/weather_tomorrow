@@ -56,15 +56,7 @@ def read_weather_data_from_google_sheets(sheet_url):
     except Exception as e:
         print(f"Error reading Google Sheets data: {e}")
         return None
-        # Example usage:
-sheet_url = "https://docs.google.com/spreadsheets/d/1QrvWcnT55mAl2NVi7rpZbdm9AzCsAvrEYRrgpMQQ-_I/edit?gid=0#gid=0"
-weather_data = read_weather_data_from_google_sheets(sheet_url)
-if weather_data:
-    print("Weather data retrieved successfully:")
-    print(weather_data)
-    create_gui(weather_data)  # Call create_gui with retrieved weather_data
-else:
-    print("No weather data available.")
+        
 
 # Function to create the GUI
 def create_gui(weather_data):
@@ -418,6 +410,21 @@ def get_image_path(weather_condition):
 
     # Return the image path based on the weather condition
     return image_map.get(weather_condition, "")
+
+
+
+
+# Main function to run the application
+def main():
+    sheet_url = 'https://docs.google.com/spreadsheets/d/1QrvWcnT55mAl2NVi7rpZbdm9AzCsAvrEYRrgpMQQ-_I/edit?gid=0#gid=0'
+    weather_data = read_weather_data_from_google_sheets(sheet_url)
+    if weather_data:
+        create_gui(weather_data)
+    else:
+        print("Failed to retrieve weather data from Google Sheets.")
+
+if __name__ == "__main__":
+    main()
 #------------------------------------------------------------------
 # # Example usage:
 # file_path = "weather_tomorrow.csv"
