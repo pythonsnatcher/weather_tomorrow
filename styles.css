@@ -1,71 +1,44 @@
-/* Reset default margin and padding */
-body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-}
+/* styles.css */
 
-/* Set background image */
+/* Basic styling */
 body {
     background-image: url('../static/images/bg.png'); /* Adjust the path if necessary */
     background-size: cover; /* Cover the entire viewport */
     background-position: center; /* Center the background image */
     height: 100vh; /* Ensure full viewport height */
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
 }
 
-/* Style for the weather data container */
-.weather-container {
-    max-width: 600px; /* Adjust as needed */
-    margin: 0 auto; /* Center horizontally */
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
-}
-
-/* Style for the heading */
-.weather-heading {
-    font-size: 24px;
-    font-weight: bold;
+h1 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Adjust as needed */
 }
 
-/* Style for the list */
-.weather-list {
+ul {
     list-style-type: none;
     padding: 0;
+    text-align: center; /* Center text content horizontally within the <ul> */
 }
 
-/* Style for list items */
-.weather-list li {
+ul li {
     margin-bottom: 10px;
-    display: flex;
-    align-items: center;
+    opacity: 0; /* Initially hide elements */
+    transform: translateY(20px); /* Slide down animation effect */
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* Style for images within list items */
-.weather-list li img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+/* Animation class */
+.animate {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slide 25s ease-in-out infinite; /* Updated duration */
 }
 
-/* Style for weather description text */
-.weather-description {
-    flex: 1; /* Take remaining space */
-}
-
-/* Media query for smaller screens */
-@media (max-width: 600px) {
-    .weather-container {
-        padding: 10px;
-    }
-    .weather-heading {
-        font-size: 20px;
-    }
-    .weather-list li img {
-        width: 40px;
-        height: 40px;
-    }
+@keyframes slide {
+    0% { transform: translateY(0); opacity: 0; }
+    50% { transform: translateY(-10px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0; }
 }
