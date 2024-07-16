@@ -35,7 +35,7 @@ def read_weather_data_from_google_sheets(sheet_url):
 @app.route('/')
 def index():
     # Assuming weather data is retrieved from Google Sheets
-    sheet_url = "https://docs.google.com/spreadsheedm9AzCsAvrEYRrgpMQQ-_I/edit?gid=0#gid=0"
+    sheet_url = "https://docs.google.com/sprea      AzCsAvrEYRrgpMQQ-_I/edit?gid=0#gid=0"
     weather_data_sheets = read_weather_data_from_google_sheets(sheet_url)
 
     return render_template('index.html', weather_data_sheets=weather_data_sheets)
