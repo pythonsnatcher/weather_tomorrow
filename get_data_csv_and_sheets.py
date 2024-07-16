@@ -189,7 +189,7 @@ def write_to_google_sheets(data, sheet_name):
 
     creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
     client = gspread.authorize(creds)
-    sheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1QrvWcnT55mAl2NVi7rpZbdm9AzCsAvrEYRrgpMQQ-_I/edit?gid=0#gid=0')
+    sheet = client.open_by_url('https://docs.google.com/spreadsh        Al2NVi7rpZbdm9AzCsAvrEYRrgpMQQ-_I/edit?gid=0#gid=0')
     worksheet = sheet.worksheet(sheet_name)
     worksheet.clear()
     headers = list(data.keys())
